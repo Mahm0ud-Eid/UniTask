@@ -1,0 +1,125 @@
+{{ set(this, 'title', result.user.name ~ "'s result") }}
+{{ register_asset_bundle('frontend/assets/ReviewResultAsset') }}
+<div class="row">
+  <div class="card">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+      <div>
+        <p>Started at: {{ result.started_at }}</p>
+        <p>Finished at: {{ result.finished_at }}</p>
+        <p>Grade: {{ result.grade }}/{{ quizTotal }}</p>
+        {% if result.status == 4 %}
+            <p>Status: <span class="badge badge-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                             title="This result is currently in queue and being automatically reviewed by the system.">
+                Under Review</span></p>
+        {% elseif result.status == 5 %}
+            <p>Status: <span class="badge badge-success" data-bs-toggle="tooltip" data-bs-placement="top"
+                             title="This result has been reviewed by the system.">Reviewed</span></p>
+        {% elseif result.status == 6 %}
+            <p>Status: <span class="badge badge-danger" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="This result has been reviewed by the system and failed so a manual review is required.">
+                Needs review</span></p>
+        {% endif %}
+      </div>
+      <div class="card-tools">
+        {% if result.status == 5 or result.status == 6 %}
+        <a href="auto-review" class="btn btn-primary">Re-review</a>
+        {% endif %}
+       {% if result.status == 6 %}
+        <button class="btn btn-success mark-as-reviewed"
+                data-attempt-id="{{ result.id }}"
+                data-value="false">Mark as Reviewed
+        </button>
+        {% endif %}
+        <button class="btn btn-warning" type="button" data-bs-toggle="collapse"
+                data-bs-target="#changeGradeForm" aria-expanded="false" aria-controls="changeGradeForm">
+          Change grade
+        </button>
+          <div class="collapse" id="changeGradeForm">
+            <div class="form-group mt-2" id="changegrade-form">
+              <label for="change-grade">Change grade</label>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" id="change-grade" name="change-grade" min="0" max="{{ quizTotal }}" value="{{ result.grade }}">
+                <div class="input-group-append">
+                  <span class="input-group-text">/ {{ quizTotal }}</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <button class="btn btn-secondary cancel-change-grade-button">Cancel</button>
+                <button class="btn btn-success save-change-grade-button"
+                        data-attempt-id="{{ result.id }}">Save</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if result.status == 5 or result.status == 6 %}
+    <div class="card-body">
+      {% for question in quiz.quizQuestions %}
+      {% if question.question.question_type == 1 %}
+      <div class="card border {% if result.answers[question.question.id].correct %}border-success{% else %}border-danger{% endif %}">
+        {% else %}
+        <div class="card border {% if result.answers[question.question.id].correct %}border-success{% else %}border-danger{% endif %}">
+          {% endif %}
+          <div class="card-header">
+            <h3 class="card-title">Q: {{ question.question.question_text }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Correct Answer</h4>
+                {% if question.question.question_type == 1 %}
+                  <p>{{ question.question.options|filter(o => o.id == question.question.correct_answer)|first().option_text ?? '' }}</p>
+                {% else %}
+                  <p>{{ question.question.correct_answer }}</p>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <h4>Student Answer</h4>
+                <p>{{ result.answers[question.question.id].answer }}</p>
+                <div class="d-flex justify-content-between" id="mark-buttons-{{ question.question.id }}">
+                  {% if not result.answers[question.question.id].correct %}
+                    <button class="btn btn-success mark-as-correct"
+                            data-question-id="{{ question.question.id }}"
+                            data-attempt-id="{{ result.id }}"
+                            data-value="true">Mark as Correct</button>
+                    <div class="form-group mt-2" id="add-grade-form" style="display:none;">
+                      <label for="add-grade">Add grade</label>
+                      <input type="number" id="add-grade" name="add-grade" min="0" max="{{ quizTotal - result.grade}}" value="{{ question.question.grade }}">
+                      <div class="d-flex justify-content-between mt-2">
+                        <button class="btn btn-secondary cancel-add-grade-button">Cancel</button>
+                        <button class="btn btn-success save-add-grade-button"
+                                data-question-id="{{ question.question.id }}"
+                                data-attempt-id="{{ result.id }}">Save</button>
+                      </div>
+                    </div>
+                  {% else %}
+                    <button class="btn btn-danger mark-as-incorrect" data-question-id="{{ question.question.id }}"
+                            data-attempt-id="{{ result.id }}"
+                            data-value="false">Mark as Wrong
+                    </button>
+                    <div class="form-group mt-2" id="add-grade-form" style="display:none;">
+                      <label for="add-grade">Add grade</label>
+                      <input type="number" id="add-grade" name="add-grade" min="0" max="{{ quizTotal - result.grade}}" value="{{ question.question.grade }}">
+                      <div class="d-flex justify-content-between mt-2">
+                        <button class="btn btn-secondary cancel-add-grade-button">Cancel</button>
+                        <button class="btn btn-success save-add-grade-button"
+                                data-question-id="{{ question.question.id }}"
+                                data-attempt-id="{{ result.id }}">Save</button>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+      {% else %}
+        <div class="card-body">
+          <p>There are no results to review at the moment.</p>
+        </div>
+    {% endif %}
+  </div>
+</div>

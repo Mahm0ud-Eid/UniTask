@@ -1,0 +1,42 @@
+{% set title = attempt.user.name ~ "'s attempt" %}
+
+<div class="card">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+            <p>Started at: {{ attempt.started_at }}</p>
+            <p>Finished at: {{ attempt.finished_at }}</p>
+            <p>Grade: {{ attempt.grade }}/{{ attempt.quiz.totalGrade }}</p>
+        </div>
+    </div>
+    {% if attempt.status == 5 %}
+        <div class="card-body">
+            {% for question in questions %}
+                <div class="card border border-{{ attempt.answers[question.id].correct ? 'success' : 'danger' }}">
+                    <div class="card-header">
+                        <h3 class="card-title">Q: {{ question.question_text }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Correct Answer</h4>
+                                {% if question.options|length == 0 %}
+                                    <p>{{ question.correct_answer ?? '' }}</p>
+                                {% else %}
+                                    <p>{{ question.options|filter(o => o.id == question.correct_answer)|first().option_text }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Student Answer</h4>
+                                <p>{{ attempt.answers[question.id].answer }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card-body">
+            <p>You cannot view the result at the moment.</p>
+        </div>
+    {% endif %}
+</div>

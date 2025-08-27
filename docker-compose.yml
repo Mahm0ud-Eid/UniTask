@@ -1,0 +1,58 @@
+version: '3.2'
+services:
+  webdev:
+    image: 'yiisoftware/yii2-php:8.1-fpm-nginx'
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - common/config/.env
+    depends_on:
+      - mysql
+    volumes:
+      - '~/.composer-docker/cache:/root/.composer/cache:delegated'
+      - './:/app'
+      - '../project_uploads:/app/frontend/web/uploads:delegated'
+      - './service-config/nginx/sites-local:/etc/nginx/conf.d:ro'
+      - '../project_zips:/app/frontend/web/zips:delegated'
+#  memcached:
+#    image: memcached
+#    restart: always
+  mysql:
+    image: 'mysql:8.0.20'
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=SgJyyp28zqRKh5
+      - MYSQL_DATABASE=uni_local
+    volumes:
+      - 'db2:/var/lib/mysql'
+      - './service-config/mysql/my.conf:/etc/mysql/conf.d/mysql.cnf'
+    ports:
+      - '3306:3306'
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+      - '--default-authentication-plugin=mysql_native_password'
+  pma:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - PMA_HOSTS=mysql
+    ports:
+      - '7474:80'
+  worker:
+    image: 'yiisoftware/yii2-php:8.2-fpm-nginx'
+    env_file:
+      - common/config/.env
+    volumes:
+      - '~/.composer-docker/cache:/root/.composer/cache:delegated'
+      - './:/app'
+      - './service-config/nginx/sites-local:/etc/nginx/conf.d:ro'
+      - './service-config/supervisor/supervisord-worker.conf:/etc/supervisor/conf.d/supervisord.conf:ro'
+      - '../project_uploads:/app/frontend/web/uploads:delegated'
+      - '../project_zips:/app/frontend/web/zips:delegated'
+volumes:
+  db2: {}

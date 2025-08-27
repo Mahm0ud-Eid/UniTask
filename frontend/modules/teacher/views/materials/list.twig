@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ subject.id }}/create" class="btn btn-primary" role="button">Add new material</a>
+            <hr>
+            <div class="row">
+            {% for material in materials %}
+                <div class="col-md-6">
+                   <div class="card">
+                       <h5 class="card-header"><a href="{{ subject.id }}/view/{{ material.id }}"><i class="fa-duotone fa-folder-open"></i> {{ material.title }}</a></h5>
+                        <div class="card-body">
+                             <p class="card-text">{{ material.description }}</p>
+                             <p class="card-text">Files: {{ filesCount[material.id] }}</p>
+                             <a href="{{ subject.id }}/view/{{ material.id }}" class="btn btn-primary">Edit</a>
+                             <a href="{{ subject.id }}/delete-all/{{ material.id }}" class="btn btn-danger">Delete</a>
+                        </div>
+                   </div>
+                </div>
+            {% else %}
+                <p>No materials found</p>
+            {% endfor %}
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

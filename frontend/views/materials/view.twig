@@ -1,0 +1,44 @@
+{{ set(this, 'title',  material.title ~ " material") }}
+
+<div class="material-view">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ material.title }}</h1>
+                    <p>Description: {{ material.description }}</p>
+                    <a href="/materials/{{ subject.id }}/download-lecture/{{ material.id }}" class="btn btn-primary">Download all</a>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File name</th>
+                            <th scope="col">File size</th>
+                            <th scope="col">From</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for file in material.files %}
+                        <tr>
+                            <th scope="row">{{ file.file.id }}</th>
+                            <td> {{ file.file.name }} </td>
+                            <td>{{ file.file.size }}</td>
+                            <td>{{ file.file.created_at }}</td>
+                            <td>
+                                <a href="/materials/{{ subject.id }}/download/{{ material.id }}/file/{{ file.file.id }}" class="btn btn-primary">Download</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

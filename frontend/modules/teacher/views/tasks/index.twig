@@ -1,0 +1,20 @@
+{{ set(this, 'title', "Tasks") }}
+
+<div class="subject-index-post">
+  {% for subject in subjects %}
+    <div class="subject-container">
+      <div class="subject-image-container">
+        <img src="/img/{{ subject.name }}.jpg" alt="">
+      </div>
+      <div class="subject-meta-container">
+        <h2 class="title">{{ subject.name }}</h2>
+        <span class="desc">Tasks: {{ subject.tasks|length }}</span>
+        <span class="desc">Department: {{ subject.department.name }}</span>
+        <span class="desc">Semester: {{ subject.semester.name }}</span>
+      </div>
+      <div class="subject-button-container">
+        <a href="/teacher/tasks/{{ subject.id }}" class="button">View →</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>

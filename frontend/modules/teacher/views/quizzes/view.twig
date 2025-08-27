@@ -1,0 +1,45 @@
+{#set title#}
+{{ set(this, 'title', subject.name ~ " Quizzes") }}
+{#button to create quiz by redirecting to /quizzes/create #}
+<a href="/teacher/quizzes/{{ subject.id }}/create" class="btn btn-info">Create a new quiz</a>
+<br><br>
+<div class="row">
+    {% for quiz in quizzes %}
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ quiz.name }}
+                    {% if quiz.active == 1 %}
+                        <span class="badge badge-success">Active</span>
+                    {% else %}
+                        <span class="badge badge-danger">Inactive</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ quiz.description }}
+                    </p>
+                    <p>Attempts: {{ quizzes_count[quiz.id].taken }}/{{ quizzes_count[quiz.id].total }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/teacher/quizzes/{{ subject.id }}/update/{{ quiz.id }}" class="btn btn-primary">Update</a>
+                {% if quiz.active == 1 %}
+                        <a href="/teacher/quizzes/{{ subject.id }}/deactivate/{{ quiz.id }}" class="btn btn-danger">Deactivate</a>
+                {% else %}
+                        <a href="/teacher/quizzes/{{ subject.id }}/activate/{{ quiz.id }}" class="btn btn-success">Activate</a>
+                {% endif %}
+                    <a href="/teacher/quizzes/{{ quiz.id }}/results" class="btn btn-info">Results</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% if quizzes|length == 0 %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text text-center">No quizzes found.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

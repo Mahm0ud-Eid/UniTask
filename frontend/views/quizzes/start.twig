@@ -1,0 +1,78 @@
+{{ register_asset_bundle('frontend/assets/StartQuizAsset') }}
+<input type="hidden" id="ends-at" value="{{ attempt.ends_at }}">
+<input type="hidden" id="quiz-id" value="{{ attempt.quiz_id }}">
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10 col-lg-10">
+            {% for question in questions %}
+                {% set loopindex = loop.index %}
+                <div class="border question-container" data-id="question{{ question.id }}" id="question{{ loop.index }}">
+                    <div class="question bg-white p-3 border-bottom">
+                        <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                            <h4>MCQ Quiz</h4><span>({{ loop.index }} of {{ questions|length }})</span>
+                        </div>
+                    </div>
+                    <div class="question bg-white p-3 border-bottom">
+                        <div class="d-flex flex-row align-items-center question-title">
+                            <h3 class="text-danger">Q.{{ loop.index }}</h3>
+                            <h5 class="mt-1 ml-2">{{ question.question_text }}</h5>
+                        </div>
+                        {% if question.question_type == 1 %}
+                            {% for option in question.options %}
+                                <div class="ans ml-2">
+                                    <label class="radio">
+                                        <input type="radio" name="question{{ loopindex }}" data-api="{{ question.id }}"
+                                               id="question{{ loopindex }}"
+                                               value="{{ option.option_text }}">
+                                        <span>{{ option.option_text }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        {% elseif question.question_type == 2 %}
+                            <div class="ans ml-2">
+                                <label class="radio">
+                                    <input type="radio" name="question{{ loopindex }}" data-api="{{ question.id }}"
+                                           id="question{{ loopindex }}"
+                                           value="True">
+                                    <span>True</span>
+                                </label>
+                            </div>
+                            <div class="ans ml-2">
+                                <label class="radio">
+                                    <input type="radio" name="question{{ loopindex }}" data-api="{{ question.id }}"
+                                           id="question{{ loopindex }}"
+                                           value="False">
+                                    <span>False</span>
+                                </label>
+                            </div>
+                        {% elseif question.question_type == 3 %}
+                            <div class="ans ml-6">
+                                    <textarea name="question{{ loopindex }}" data-api="{{ question.id }}"
+                                              id="question{{ loopindex }}"
+                                              class="form-control"></textarea>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
+                        <button class="btn btn-primary d-flex align-items-center btn-danger previous-btn" type="button">
+                            <i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous
+                        </button>
+                        <button class="btn btn-primary border-success align-items-center btn-success next-btn" type="button">
+                            Next<i class="fa fa-angle-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="col-md-2 col-lg-2">
+            <div class="timer">
+                <p id="timer">00:00:00</p>
+            </div>
+            <button class="btn btn-primary border-success align-items-center btn-success" id="submit-btn" type="button">
+                Submit<i class="fa fa-check ml-2"></i>
+            </button>
+        </div>
+    </div>
+</div>
+

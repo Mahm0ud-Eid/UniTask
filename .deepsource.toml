@@ -1,0 +1,41 @@
+version = 1
+
+exclude_patterns = [
+  "frontend/web/js/assets/**",
+  "frontend/web/css/fa-pro/**",
+  "frontend/web/vendor/**",
+  "homepage/web/js/assets/**",
+  "homepage/web/vendor/**",
+  "**/tests/**",
+  "frontend/web/css/*.min.css",
+  "frontend/web/css/*.min.css.map",
+  "frontend/web/css/adminlte.css",
+  "frontend/web/js/*.min.js",
+  "frontend/web/js/*.min.js.map",
+  "frontend/web/js/adminlte.js",
+  "frontend/web/js/start-quiz.js",
+  "frontend/modules/teacher/views/tasks/_form.php",
+  "frontend/views/tasks/view.php",
+]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+  [analyzers.meta]
+    environment = ["jquery"]
+
+[[analyzers]]
+name = "php"
+enabled = true
+
+[[transformers]]
+name = "prettier"
+enabled = true
+
+[[transformers]]
+name = "standardjs"
+enabled = true
+
+[[transformers]]
+name = "php-cs-fixer"
+enabled = true

@@ -1,0 +1,40 @@
+{{ set(this, 'title', "Quizzes attempted") }}
+<div class="container mt-5">
+    <div class="row">
+        {% for attempt in attempts %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ attempt.quiz.name }}</h5>
+                        <p class="card-text">{{ attempt.quiz.description }}</p>
+                        <p class="card-text">Attempted on: {{ attempt.finished_at|date('Y-m-d H:i:s') }}</p>
+                        {% if attempt.status == 5 %}
+                            <p class="card-text">Status: <span class="badge badge-success" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                               title="This result has been reviewed.">
+                                    Reviewed</span></p>
+                        {% else %}
+                            <p class="card-text">
+                            Status: <span class="badge badge-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                                          title="This result is currently in under review">
+                            Under Review</span></p>
+                        {% endif %}
+                        {% if attempt.status == 5 and attempt.quiz.results_visibility != 3 %}
+                            {% if attempt.quiz.results_visibility == 2 and attempt.quiz.expires_at < now or attempt.quiz.results_visibility == 1 %}
+                                <a href="/quizzes/{{ attempt.id }}/result" class="btn btn-primary">View result</a>
+                            {% else %}
+                                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Viewing is not available.
+                                Check back by {{ attempt.quiz.expires_at }} UTC+0">
+                            <button class="btn btn-primary" type="button" disabled>View result</button>
+                                    </span>
+                            {% endif %}
+                        {% else %}
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Viewing is not available">
+                            <button class="btn btn-primary" type="button" disabled>View result</button>
+                                    </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

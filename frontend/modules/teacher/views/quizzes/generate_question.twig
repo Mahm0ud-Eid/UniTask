@@ -1,0 +1,47 @@
+{% macro mcqQuestionHtml(count, numOptions, questionData) %}
+    {% set questionNumber = count + 1 %}
+
+    <div class="card mb-3 question" id="question_{{ questionNumber }}">
+        <input type="hidden" id="question_{{ questionNumber }}_id" value="{{ questionData.id }}">
+        <div class="card-header">Question {{ questionNumber }}</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="question_{{ questionNumber }}_text">Question Text</label>
+                <input type="text" class="form-control" id="question_{{ questionNumber }}_text" name="question_{{ questionNumber }}_text" value="{{ questionData.question }}">
+            </div>
+            <input type="hidden" id="question_{{ questionNumber }}_type" value="{{ questionData.type }}">
+            {% if questionData.type == 1 %}
+                {% for i in 0..numOptions-1 %}
+                    {% set optionId = "question_" ~ questionNumber ~ "_option_" ~ (i+1) %}
+                    <div class="form-group">
+                        <label for="{{ optionId }}">Option {{ i+1 }}</label>
+                        <input type="text" class="form-control" id="{{ optionId }}" name="{{ optionId }}" value="{{ questionData.options[i].option_text }}">
+                    </div>
+                {% endfor %}
+
+                <div class="form-group">
+                    <label for="question_{{ questionNumber }}_correct_option">Correct Option</label>
+                    <select class="form-select" id="question_{{ questionNumber }}_correct_option" name="question_{{ questionNumber }}_correct_option">
+                        {% for option in questionData.options %}
+                            <option value="{{ option.id }}" {% if option.id == questionData.answer %}selected{% endif %}>Option {{ loop.index }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% elseif questionData.type == 2 %}
+                <div class="form-group">
+                    <label for="question_{{ questionNumber }}_correct_option">Correct Option</label>
+                    <select class="form-select" id="question_{{ questionNumber }}_correct_option" name="question_{{ questionNumber }}_correct_option">
+                        <option value="True" {% if questionData.answer == 1 %}selected{% endif %}>True</option>
+                        <option value="False" {% if questionData.answer == 2 %}selected{% endif %}>False</option>
+                    </select>
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="question_{{ questionNumber }}_grade">Grade</label>
+                <input type="number" class="form-control" id="question_{{ questionNumber }}_grade" name="question_{{ questionNumber }}_grade"
+                value="{{ questionData.grade }}">
+            </div>
+            <button class="btn btn-danger" onclick="deleteQuestion({{ questionNumber }})">Delete Question</button>
+        </div>
+    </div>
+{% endmacro %}

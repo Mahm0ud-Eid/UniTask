@@ -1,0 +1,120 @@
+{% if new == false %}
+{{ set(this, 'title', "Update quiz for " ~ quiz.subject.name) }}
+    <input type="hidden" id="quiz_id" value="{{ quiz.id }}">
+{% else %}
+{{ set(this, 'title', "New quiz for " ~ subject.name) }}
+    <input type="hidden" id="subject_id" value="{{ subject.id }}">
+{% endif %}
+{{ register_asset_bundle('frontend/assets/CreateQuizAsset') }}
+<div class="row">
+    <div class="card">
+        <div class="card-header">Quiz details</div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group required">
+                <label for="quiz_name" class="control-label col-md-4">Quiz name</label>
+
+                    <input id="quiz_name" type="text" class="form-control" placeholder="Quiz name" value="{{ quiz.name }}">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="quiz_description" class="control-label col-md-4">Quiz description</label>
+                    <textarea id="quiz_description" type="text" class="form-control" placeholder="Quiz description">{{ quiz.description }}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="quiz_active">Active</label>
+                            <select id="quiz_active" class="form-select">
+                                {% if quiz.active == 1 %}
+                                    <option value="1" selected>Yes</option>
+                                    <option value="0">No</option>
+                                {% else %}
+                                    <option value="1">Yes</option>
+                                    <option value="0" selected>No</option>
+                                {% endif %}
+                            </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                    <label for="quiz_time">Time (in minutes)</label>
+                        <input id="quiz_time" type="number" class="form-control" placeholder="Time" value="{{ quiz.duration }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                    <label for="quiz_result_visibility">Result visibility</label>
+                        <select id="quiz_result_visibility" class="form-select">
+                            {% if quiz.result_visibility == 1 %}
+                                <option value="1" selected>After answering</option>
+                                <option value="2">After end time</option>
+                                <option value="3">Never</option>
+                            {% elseif quiz.result_visibility == 2 %}
+                                <option value="1">After answering</option>
+                                <option value="2" selected>After end time<</option>
+                                <option value="3">Never</option>
+                            {% else %}
+                                <option value="1">After answering</option>
+                                <option value="2">After end time</option>
+                                <option value="3" selected>Never</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="quiz_start_time">Start time</label>
+                        <input id="quiz_start_time" type="datetime-local" class="form-control" value="{{ quiz.starts_at }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group required">
+                    <label for="quiz_end_time">End time</label>
+                        <input id="quiz_end_time" type="datetime-local" class="form-control" value="{{ quiz.expires_at }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="card">
+        <div class="card-header">Questions</div>
+        <div class="card-body" id="quiz-questions">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Add MCQ question</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item mcq-options" data-amount="2">2 Options</a></li>
+                            <li><a class="dropdown-item mcq-options" data-amount="3">3 Options</a></li>
+                            <li><a class="dropdown-item mcq-options" data-amount="4">4 Options</a></li>
+                            <li><a class="dropdown-item mcq-options" data-amount="5">5 Options</a></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="add_text_question">Add text question</button>
+                    <button type="button" class="btn btn-primary" id="add_true_false_question">Add True/False question</button>
+                </div>
+            </div>
+            {% if new == false %}
+                {% import "generate_question.twig" as myMacros %}
+                {% set count = 0 %}
+                {% for questionData in questions %}
+                    {{ myMacros.mcqQuestionHtml(count, questionData.options|length, questionData) }}
+                    {% set count = count + 1 %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-success" id="submit-quiz">Submit</a>
+</div>

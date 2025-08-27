@@ -1,0 +1,35 @@
+{{ set(this, 'title', "Tasks") }}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Available Tasks</h1>
+        </div>
+    </div>
+    {% if tasks is empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text text-center">No tasks available at the moment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            {% for task in tasks %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ task.title }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <a href="/tasks/{{ task.id }}/view" class="btn btn-primary">View Task</a>
+                            <p class="card-text"><small class="text-muted">Ends {{ task.ends_at }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
