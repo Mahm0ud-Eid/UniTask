@@ -1,59 +1,93 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+# UNITask
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+A unified university platform built by the **IT Geeks** team from Beni Suef Technological University, a team consists of me and my fellow students. UNITask aims to help teachers, students, and staff communicate effectively through one reliable, customizable, and easy-to-use platform.
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+---
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+## 🚀 Introduction
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+Currently, universities face challenges such as:
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
+- No simple way to send and receive tasks.
+- Lack of an independent platform to upload lectures.
+- Difficulty in creating and grading quizzes.
+- No reliable and unified digital platform for the university.
 
-## DIRECTORY STRUCTURE
+**UNITask solves these problems by:**
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+- Providing a centralized and reliable platform for students, teachers, and staff.
+- Allowing teachers to create quizzes with automatic grading.
+- Enabling easy creation, sending, and receiving of tasks.
+- Offering role-based permissions depending on whether you are a teacher, student, or staff member.
+
+---
+
+## 🛠️ Features
+
+- **Fast and reliable structure**.
+- **Task creation & management** per department.
+- **Role-based permissions** for teachers, students, and staff.
+- **Quizzes with auto-marking** for easy assessments.
+- **Customizable features** managed by university staff.
+- **Department-specific teacher permissions**.
+
+---
+
+## 📅 Upcoming Updates
+
+| Phase | Planned Update                          |
+| ----- | --------------------------------------- |
+| 1     | Attendance System                       |
+| 2     | Labs and Classes Management             |
+| 3     | Library Management System               |
+| 4     | Training & Certificate Management       |
+| 5     | Full University Management System (UMS) |
+
+---
+
+## 💻 Tech Stack
+
+**Languages:**
+
+- HTML
+- CSS
+- JavaScript
+- PHP
+- SQL
+- jQuery
+- Bootstrap
+
+**Tools & Platforms:**
+
+- GitHub
+- CI/CD
+- DeepSource
+- MySQL
+- Composer
+- Docker
+- phpMyAdmin
+
+---
+
+## 📸 Platform Preview
+
+👉 [Live Preview](http://panel.tasks.devlevi.live)
+
+---
+
+## 👨‍💻 Team IT Geeks
+
+- **Ahmed Abd Elrahman** – Frontend Developer
+- **Sara Goda** – Frontend Developer
+- **Nada Ahmed** – Frontend Developer
+- **Mohamed Karam** – Backend Developer
+- **Asser Samier** – Backend Developer
+- **Mahmoud Mohamed** – Full Stack Developer
+- **Eslam Abdin** – UI/UX Designer
+
+---
+
+## 📩 Contact
+
+📧 mahmoodmeid@gmail.com  
+📞 +20 105 097 9389
