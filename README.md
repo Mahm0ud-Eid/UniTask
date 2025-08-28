@@ -77,12 +77,12 @@ Currently, universities face challenges such as:
 
 ## 👨‍💻 Team IT Geeks
 
+- **Mahmoud Mohamed** – Full Stack Developer
+- **Mohamed Karam** – Backend Developer
+- **Asser Samier** – Backend Developer
 - **Ahmed Abd Elrahman** – Frontend Developer
 - **Sara Goda** – Frontend Developer
 - **Nada Ahmed** – Frontend Developer
-- **Mohamed Karam** – Backend Developer
-- **Asser Samier** – Backend Developer
-- **Mahmoud Mohamed** – Full Stack Developer
 - **Eslam Abdin** – UI/UX Designer
 
 ---
