@@ -1,6 +1,6 @@
 # UNITask
 
-A unified university platform built by the **IT Geeks** team from Beni Suef Technological University, a team consists of me and my fellow students. UNITask aims to help teachers, students, and staff communicate effectively through one reliable, customizable, and easy-to-use platform.
+A unified university platform built by the **IT Geeks** team from Beni Suef Technological University, a team that consists of me and my fellow students. UNITask aims to help teachers, students, and staff communicate effectively through one reliable, customizable, and easy-to-use platform.
 
 ---
 
@@ -69,21 +69,14 @@ Currently, universities face challenges such as:
 
 ---
 
-## 📸 Platform Preview
-
-👉 [Live Preview](http://panel.tasks.devlevi.live)
-
----
-
 ## 👨‍💻 Team IT Geeks
 
-- **Mahmoud Mohamed** – Full Stack Developer
+- **Mahmoud Mohamed** – Web & UI/UX Developer
 - **Mohamed Karam** – Backend Developer
 - **Asser Samier** – Backend Developer
 - **Ahmed Abd Elrahman** – Frontend Developer
 - **Sara Goda** – Frontend Developer
 - **Nada Ahmed** – Frontend Developer
-- **Eslam Abdin** – UI/UX Designer
 
 ---
 
